@@ -2021,16 +2021,14 @@ SoftBoundCETS::getGlobalVariableBaseBound(Value* operand,
     ConstantInt::get(Type::getInt32Ty(module->getContext()), 0);
   indices_base.push_back(index_base);
 
-  /* FIXME: look the type of getGetElementPtr */
-  Constant* base_exp = ConstantExpr::getGetElementPtr(gv->getType(), gv, indices_base);
+  Constant* base_exp = ConstantExpr::getGetElementPtr(nullptr, gv, indices_base);
         
   std::vector<Constant*> indices_bound;
   Constant* index_bound = 
     ConstantInt::get(Type::getInt32Ty(module->getContext()), 1);
   indices_bound.push_back(index_bound);
 
-  /* FIXME: look the type of getGetElementPtr */
-  Constant* bound_exp = ConstantExpr::getGetElementPtr(gv->getType(), gv, indices_bound);
+  Constant* bound_exp = ConstantExpr::getGetElementPtr(nullptr, gv, indices_bound);
     
   operand_base = base_exp;
   operand_bound = bound_exp;    
@@ -2577,8 +2575,7 @@ SoftBoundCETS::handleGlobalSequentialTypeInitializer(Module& module,
             indices_addr_ptr.push_back(index2);
 
             Constant* Indices[3] = {index0, index1, index2};
-	    /* FIXME: I don't think gv->getType() is the right thing to do */
-            Constant* addr_of_ptr = ConstantExpr::getGetElementPtr(gv->getType(), gv, Indices);
+            Constant* addr_of_ptr = ConstantExpr::getGetElementPtr(nullptr, gv, Indices);
             Type* initializer_type = initializer_opd->getType();
             Value* initializer_size = getSizeOfType(initializer_type);
             
@@ -2697,8 +2694,7 @@ handleGlobalStructTypeInitializer(Module& module,
       indices_addr_ptr.push_back(index2);
       length++;
 
-      /* FIXME: gv->getType() is not the correct thing to do */
-      addr_of_ptr = ConstantExpr::getGetElementPtr(gv->getType(), gv, indices_addr_ptr);
+      addr_of_ptr = ConstantExpr::getGetElementPtr(nullptr, gv, indices_addr_ptr);
       
       Type* initializer_type = initializer_opd->getType();
       Value* initializer_size = getSizeOfType(initializer_type);     
@@ -2824,11 +2820,10 @@ void SoftBoundCETS::getConstantExprBaseBound(Constant* given_constant,
     indices_base.push_back(index_base0);
     indices_bound.push_back(index_bound0);
 
-    /* FIXME: given_contant->getType() is not the right thing to do */
-    Constant* gep_base = ConstantExpr::getGetElementPtr(given_constant->getType(),
+    Constant* gep_base = ConstantExpr::getGetElementPtr(nullptr,
 							given_constant, 
                                                         indices_base);    
-    Constant* gep_bound = ConstantExpr::getGetElementPtr(given_constant->getType(),
+    Constant* gep_bound = ConstantExpr::getGetElementPtr(nullptr,
 							 given_constant, 
                                                          indices_bound);
       
@@ -3150,8 +3145,7 @@ Value* SoftBoundCETS:: getSizeOfType(Type* input_type) {
     PointerType* ptr_type = PointerType::getUnqual(seq_type->getElementType());
     Constant* gep_temp = ConstantExpr::getNullValue(ptr_type);
 
-    /* FIXME: gep_temp->getType() is not the correct thing to do */
-    Constant* gep = ConstantExpr::getGetElementPtr(gep_temp->getType(), gep_temp,  gep_idx);
+    Constant* gep = ConstantExpr::getGetElementPtr(nullptr, gep_temp,  gep_idx);
     
     Type* int64Ty = Type::getInt64Ty(seq_type->getContext());
     return ConstantExpr::getPtrToInt(gep, int64Ty);
@@ -4159,8 +4153,7 @@ void SoftBoundCETS::handleAlloca (AllocaInst* alloca_inst,
       intBound = alloca_inst->getOperand(0);
     }
 
-    /* FIXME: the type of get element ptr */
-    GetElementPtrInst* gep = GetElementPtrInst::Create(ptr->getType(),
+    GetElementPtrInst* gep = GetElementPtrInst::Create(nullptr,
 						       ptr,
                                                        intBound,
                                                        "mtmp",
@@ -5397,8 +5390,7 @@ void SoftBoundCETS::addBaseBoundGlobals(Module& M){
       indices_addr_ptr.push_back(index1);
       indices_addr_ptr.push_back(index2);
 
-      /* FIXME: look at the type for getGetElementPtr */
-      Constant* addr_of_ptr = ConstantExpr::getGetElementPtr(gv->getType(), gv, indices_addr_ptr);
+      Constant* addr_of_ptr = ConstantExpr::getGetElementPtr(nullptr, gv, indices_addr_ptr);
       Type* initializer_type = initializer_opd->getType();
       Value* initializer_size = getSizeOfType(initializer_type);
       
