@@ -243,6 +243,21 @@ static void addDataFlowSanitizerPass(const PassManagerBuilder &Builder,
   PM.add(createDataFlowSanitizerPass(LangOpts.SanitizerBlacklistFiles));
 }
 
+
+static void addSoftBoundCETSPasses(const PassManagerBuilder &Builder,
+				   legacy::PassManagerBase &PM) {
+  
+  const PassManagerBuilderWrapper &BuilderWrapper =
+    static_cast<const PassManagerBuilderWrapper&>(Builder);
+  const CodeGenOptions &CGOpts = BuilderWrapper.getCGOpts();
+  
+  PM.add(createFixByValAttributesPass());
+  PM.add(createInitializeSoftBoundCETSPass());
+  PM.add(createSoftBoundCETSPass());
+  //PM.add(new SpatialCheckOpt());
+  //  PM.add(new ShadowStackOpt());
+}
+
 static TargetLibraryInfoImpl *createTLII(llvm::Triple &TargetTriple,
                                          const CodeGenOptions &CodeGenOpts) {
   TargetLibraryInfoImpl *TLII = new TargetLibraryInfoImpl(TargetTriple);
@@ -399,6 +414,13 @@ void EmitAssemblyHelper::CreatePasses(FunctionInfoIndex *FunctionIndex) {
                            addDataFlowSanitizerPass);
     PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0,
                            addDataFlowSanitizerPass);
+  }
+
+  if (CodeGenOpts.SoftBoundCETS){
+    PMBuilder.addExtension(PassManagerBuilder::EP_OptimizerLast,
+			   addSoftBoundCETSPasses);
+    PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0,
+			   addSoftBoundCETSPasses);
   }
 
   // Set up the per-function pass manager.

@@ -400,6 +400,11 @@ static bool ParseCodeGenArgs(CodeGenOptions &Opts, ArgList &Args, InputKind IK,
                                  : CodeGenOptions::OnlyAlwaysInlining);
   // -fno-inline-functions overrides OptimizationLevel > 1.
   Opts.NoInline = Args.hasArg(OPT_fno_inline);
+
+  Opts.SoftBoundCETS = Args.hasArg(OPT_fsoftboundcets);
+  Opts.SoftBoundCETSMPX = Args.hasArg(OPT_fsoftboundcetsmpx);
+  Opts.SoftBoundMPX = Args.hasArg(OPT_fsoftboundmpx);
+ 
   Opts.setInlining(Args.hasArg(OPT_fno_inline_functions) ?
                      CodeGenOptions::OnlyAlwaysInlining : Opts.getInlining());
 

@@ -134,6 +134,11 @@ CODEGENOPT(SanitizeCoverageTraceCmp, 1, 0) ///< Enable cmp instruction tracing
                                            ///< in sanitizer coverage.
 CODEGENOPT(SanitizeCoverage8bitCounters, 1, 0) ///< Use 8-bit frequency counters
                                                ///< in sanitizer coverage.
+
+CODEGENOPT(SoftBoundCETS, 1, 0) ///< SoftBoundCETS pointer-based checking.
+CODEGENOPT(SoftBoundMPX, 1, 0) ///< SoftBoundMPX pointer-based checking.
+CODEGENOPT(SoftBoundCETSMPX, 1, 0) ///< SoftBoundCETSMPX pointer-based checking.
+
 CODEGENOPT(SimplifyLibCalls  , 1, 1) ///< Set when -fbuiltin is enabled.
 CODEGENOPT(SoftFloat         , 1, 0) ///< -soft-float.
 CODEGENOPT(StrictEnums       , 1, 0) ///< Optimize based on strict enum definition.
