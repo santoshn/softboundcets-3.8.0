@@ -39,10 +39,6 @@ Using SoftBoundCETS with LLVM+CLANG-3.8.0 on a x86-64 machine with Linux OS
    make
    ```
 
-   If you compiled the LLVM gold plugin, add the line below before calling
-   make, in order to also build the SoftBoundCETS runtime library with LTO
-   support.
-
 
 5. Test whether it all worked
 
@@ -51,7 +47,6 @@ Using SoftBoundCETS with LLVM+CLANG-3.8.0 on a x86-64 machine with Linux OS
       cd <git_repo>
       cd test
       clang -fsoftboundcets test.c -o test -L<git_repo>/runtime -lm -lrt -lsoftboundcets_rt
-      clang -fsoftboundcets -flto test.c -o test-lto -L<git_repo>/runtime/lto -lm -lrt -lsoftboundcets_rt
       ```
 
    2. Run the test program
