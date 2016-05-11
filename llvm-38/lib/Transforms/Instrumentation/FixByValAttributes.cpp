@@ -173,13 +173,12 @@ FixByValAttributes::createGEPStores(Value* result_alloca,
     }
     else{
 
-      /* FIXME: I need to fix the types */
-      GetElementPtrInst* gep_idx_src = GetElementPtrInst::Create(call_site_arg->getType(),
+      GetElementPtrInst* gep_idx_src = GetElementPtrInst::Create(nullptr,
 								 call_site_arg, 
 								 new_indices, 
 								 "", insert_at);
 
-      GetElementPtrInst* gep_idx_dest = GetElementPtrInst::Create(result_alloca->getType(),
+      GetElementPtrInst* gep_idx_dest = GetElementPtrInst::Create(nullptr,
 								  result_alloca, 
 								  new_indices,
 								  "", insert_at);

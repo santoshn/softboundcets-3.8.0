@@ -440,6 +440,9 @@ namespace {
     }
 
     bool runOnBasicBlock(BasicBlock &BB) override {
+      //SoftBoundCETS: disable vectorization to enable metadata
+      //propagation for now.
+      return false;
       // OptimizeNone check deferred to vectorizeBB().
 
       AA = &getAnalysis<AAResultsWrapperPass>().getAAResults();

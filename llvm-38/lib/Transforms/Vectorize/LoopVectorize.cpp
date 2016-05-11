@@ -1610,6 +1610,11 @@ struct LoopVectorize : public FunctionPass {
   BlockFrequency ColdEntryFreq;
 
   bool runOnFunction(Function &F) override {
+
+    //SoftBoundCETS: disable vectorization to enable metadata
+    //propagation for now
+    return false;
+
     SE = &getAnalysis<ScalarEvolutionWrapperPass>().getSE();
     LI = &getAnalysis<LoopInfoWrapperPass>().getLoopInfo();
     TTI = &getAnalysis<TargetTransformInfoWrapperPass>().getTTI(F);

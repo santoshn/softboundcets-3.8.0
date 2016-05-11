@@ -1030,6 +1030,8 @@ ConvertScalar_InsertValue(Value *SV, Value *Old,
 
 
 bool SROA::runOnFunction(Function &F) {
+
+  return false;
   if (skipOptnoneFunction(F))
     return false;
 

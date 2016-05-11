@@ -3160,6 +3160,11 @@ struct SLPVectorizer : public FunctionPass {
   AssumptionCache *AC;
 
   bool runOnFunction(Function &F) override {
+
+    //SoftBoundCETS: disabling vectorization for now to enable
+    //metadata propagation
+
+    return false;
     if (skipOptnoneFunction(F))
       return false;
 
